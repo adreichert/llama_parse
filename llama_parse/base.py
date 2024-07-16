@@ -126,6 +126,18 @@ class LlamaParse(BasePydanticReader):
         default=True,
         description="Whether to split by page (NOTE: using a predefined separator `\n---\n`)",
     )
+    vendor_multimodal_api_key: Optional[str] = Field(
+        default=None,
+        description="The API key for the multimodal API.",
+    )
+    use_vendor_multimodal_model: bool = Field(
+        default=False,
+        description="Whether to use the vendor multimodal API.",
+    )
+    vendor_multimodal_model_name: Optional[str] = Field(
+        default=None,
+        description="The model name for the vendor multimodal API.",
+    )
 
     @validator("api_key", pre=True, always=True)
     def validate_api_key(cls, v: str) -> str:
@@ -199,6 +211,9 @@ class LlamaParse(BasePydanticReader):
                         "gpt4o_api_key": self.gpt4o_api_key,
                         "bounding_box": self.bounding_box,
                         "target_pages": self.target_pages,
+                        "vendor_multimodal_api_key": self.vendor_multimodal_api_key,
+                        "use_vendor_multimodal_model": self.use_vendor_multimodal_model,
+                        "vendor_multimodal_model_name": self.vendor_multimodal_model_name,
                     },
                 )
                 if not response.is_success:
